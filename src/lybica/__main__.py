@@ -217,7 +217,7 @@ class CIServices(object):
         #scan actions on remote server
         logging.debug('--------------list all remote available actions-------------')
         remote_action_list = []
-        remote_actions = self.context.rpc.action__all().get('action_list',[])
+        remote_actions = self.context.rpc.actions()
         for action in remote_actions:
             if action['name'] in _exist_actions:
                 old = _exist_actions[action['name']]
