@@ -41,6 +41,10 @@ class Context(object):
     def __str__(self):
         return '#context@%s' % self.CURRENT_ID
 
+    def __getattr__(self, attr):
+        return None
+
+
 class NameSpaces(dict):
     _extended_var_re = re.compile(r'''
     ^(\w+?)        # base name (group 1)

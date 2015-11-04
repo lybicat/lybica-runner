@@ -1,6 +1,7 @@
+import os
 import logging
 
-class InitParameter(object):
+class InitPrimaryActions(object):
     ID = 0
     DESC = "Init CI primary action list."
     NAME = "init_primary_actions"
@@ -31,7 +32,8 @@ class InitWorkspace(object):
     CRITICAL = True
 
     def start_action(self, context):
-        pass
+        context.WORKSPACE = os.getenv('WORKSPACE', os.path.abspath('.'))
+        logging.info('use WORKSPACE: ' + context.WORKSPACE)
 
     def stop_action(self, context):
         pass
