@@ -17,6 +17,7 @@ class RepeatRunningWrapper(object):
         logging.info('run times: %d' % context.RUN_TIMES)
         self.output_dir = context.WORKSPACE
         self.output_xml = 'output.xml'
+        self.task_id = context.TASK_ID
         context.CASE_ROOT = os.getenv('CASE_ROOT', '.')
         logging.info('CASE_ROOT: %s' % context.CASE_ROOT)
         self._run_test(context.RUN_TIMES, context.CASE_ROOT, self.output_dir)
@@ -63,5 +64,5 @@ class RepeatRunningWrapper(object):
         return result
 
     def _post_test_summary(self, summary):
-        pass
+        getattr(self.rpc, 'tasks__%s__result' % self.task_id)(summary)
 
