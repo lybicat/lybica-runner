@@ -3,8 +3,6 @@ import logging
 import urllib
 import socket
 import json
-import thread
-from datetime import datetime
 from .decorators import retry, ignore_error
 
 
@@ -27,7 +25,6 @@ class _RestProxy(object):
         self.base = base_url.strip('/')
         self.context_type = context_type
         self.name = name
-        self.auto_check = True
 
     def __call__(self, **kwds):
         '''Call remote interface by HTTP'''
@@ -40,39 +37,19 @@ class _RestProxy(object):
         logging.info('rpc:%s, param:%s' % (api_url, str(kwds)))
         response = self._get_response(api_url, kwds)
 
-        if self.auto_check and not response:
+        if not response:
             raise RuntimeError('Failed to call remote interface, without any response.')
 
         if self.context_type == 'json':
             try:
-                data = json.loads(response)
-                if self.auto_check and data.get('status') == 'ok':
-                    return data
-                elif not self.auto_check:
-                    return data
-                else:
-                    logging.debug('return data:%s' % str(data))
-                    raise RuntimeError(data.get('msg', 'remote error'))
+                return json.loads(response)
             except ValueError:
-                if len(response) < 1024:
-                    logging.info('Error data:%s' % response)
-                else:
-                    self._write_error(api_url, {'param': kwds}, response)
+                logging.info('Error data:%s' % response)
 
         return response
-
 
     @ignore_error(None)
     @retry(3, 30)
     def _get_response(self, api_url, kwds):
         return urllib.urlopen(api_url, urllib.urlencode(kwds), proxies={}).read()
-
-
-    def _write_error(self, url, context, msg):
-        with open('error_rpc_%s.log' % thread.get_ident(), 'a') as fd:
-            fd.write('\n==========Context======================================\n')
-            fd.write('date:%s\n' % (datetime.now(),))
-            fd.write(str(context))
-            fd.write('\n----------Response-------------------------------------\n')
-            fd.write(msg)
 
