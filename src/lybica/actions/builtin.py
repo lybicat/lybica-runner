@@ -47,7 +47,21 @@ class TaskLoader(object):
     CRITICAL = True
 
     def start_action(self, context):
+        self.rpc = context.rpc
         logging.info('loading task from server.....')
+        queued_tasks = self.rpc.tasks__queued()
+        if not queued_tasks:
+            logging.info('no task in queue')
+            return
+        task = queued_tasks.pop()
+        logging.info('start task %s' % task['_id'])
+        getattr(self.rpc, 'tasks__%s__start' % task['_id'])(method='PUT')
+        context.TASK_ID = task['_id']
+        context.BUILD_ID = task['build']
+        context.CASE_SET = task['caseset']
+        context.DEVICE_SET = task['device']
+        context.ACTION_LIST.extend(task['actions'])
+        logging.info('add actions: %s' % '; '.join(task['actions']))
 
     def stop_action(self, context):
         pass

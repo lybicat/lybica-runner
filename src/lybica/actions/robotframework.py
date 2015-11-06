@@ -13,12 +13,12 @@ class RepeatRunningWrapper(object):
     def start_action(self, context):
         # run the test
         self.rpc = context.rpc
-        context.RUN_TIMES = os.getenv('RUN_TIMES', 1)
+        context.RUN_TIMES = os.getenv('RUN_TIMES', 1) # TODO
         logging.info('run times: %d' % context.RUN_TIMES)
         self.output_dir = context.WORKSPACE
         self.output_xml = 'output.xml'
         self.task_id = context.TASK_ID
-        context.CASE_ROOT = os.getenv('CASE_ROOT', '.')
+        context.CASE_ROOT = os.getenv('CASE_ROOT', '.') # TODO
         logging.info('CASE_ROOT: %s' % context.CASE_ROOT)
         self._run_test(context.RUN_TIMES, context.CASE_ROOT, self.output_dir)
 

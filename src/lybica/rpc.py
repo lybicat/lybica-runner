@@ -1,6 +1,7 @@
 import os
 import logging
 import urllib
+import urllib2
 import socket
 import json
 from .decorators import retry, ignore_error
@@ -29,8 +30,13 @@ class _JsonProxy(object):
         '''Call remote interface by HTTP'''
         socket.setdefaulttimeout(30)
         api_url = '%s/%s' % (self.base, self.name)
-        logging.info('rpc:%s, param:%s' % (api_url, str(kwds)))
-        response = self._get_response(api_url, kwds)
+        if 'method' in kwds:
+            method = kwds['method']
+            kwds.pop('method')
+        else:
+            method = None
+        logging.info('rpc:%s, method: %s, param:%s' % (api_url, method, str(kwds)))
+        response = self._get_response(api_url, kwds, method)
         try:
             return json.loads(response)
         except ValueError:
@@ -38,15 +44,21 @@ class _JsonProxy(object):
             raise
 
     @ignore_error(None)
-    @retry(3, 30)
-    def _get_response(self, api_url, kwds):
+    @retry(5, 5)
+    def _get_response(self, api_url, kwds, method=None):
+        opener = urllib2.build_opener(urllib2.HTTPHandler)
         if kwds:
-            opener = urllib.urlopen(api_url, urllib.urlencode(kwds), proxies={})
+            request = urllib2.Request(api_url, data=urllib.urlencode(kwds))
+            if method is None:
+                method = 'POST'
         else:
-            opener = urllib.urlopen(api_url, proxies={})
+            request = urllib2.Request(api_url)
+        request.set_proxy = lambda x,y: None
+        request.get_method = lambda: method or 'GET'
+        response = opener.open(request)
 
-        if opener.getcode() != 200:
+        if response.getcode() != 200:
             raise RuntimeError('invalid return code: %d' % opener.getcode())
 
-        return opener.read()
+        return response.read()
 
