@@ -64,5 +64,5 @@ class RepeatRunningWrapper(object):
         return result
 
     def _post_test_summary(self, summary):
-        getattr(self.rpc, 'tasks__%s__result' % self.task_id)(summary)
+        getattr(self.rpc, 'tasks__%s__result' % self.task_id)(**summary)
 

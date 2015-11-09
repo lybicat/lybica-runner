@@ -41,9 +41,9 @@ class InitWorkspace(object):
 
 class TaskLoader(object):
     ID = 8
-    DESC = "Load testing task information from Lybica Platform server."
-    NAME = "load_task"
-    DEPENDS = ["init_context", ]
+    DESC = 'Load testing task information from Lybica Platform server.'
+    NAME = 'load_task'
+    DEPENDS = ['init_context', ]
     CRITICAL = True
 
     def start_action(self, context):
@@ -52,10 +52,8 @@ class TaskLoader(object):
         queued_tasks = self.rpc.tasks__queued()
         if not queued_tasks:
             logging.info('no task in queue')
-            return
+            raise RuntimeError('no task in queue')
         task = queued_tasks.pop()
-        logging.info('start task %s' % task['_id'])
-        getattr(self.rpc, 'tasks__%s__start' % task['_id'])(method='PUT')
         context.TASK_ID = task['_id']
         context.BUILD_ID = task['build']
         context.CASE_SET = task['caseset']
@@ -63,22 +61,19 @@ class TaskLoader(object):
         context.ACTION_LIST.extend(task['actions'])
         logging.info('add actions: %s' % '; '.join(task['actions']))
 
-    def stop_action(self, context):
-        pass
-
 
 class TaskStatusUpdater(object):
     ID = 9
     DESC = 'Sync task status to central server.'
     NAME = 'sync_task_status'
-    DEPENDS = [] # TODO: depends on execution actions
+    DEPENDS = []
     CRITICAL = True
 
     def start_action(self, context):
-        # TODO: start task
-        pass
+        logging.info('start task %s' % context.TASK_ID)
+        getattr(context.rpc, 'tasks__%s__start' % context.TASK_ID)(method='PUT')
 
     def stop_action(self, context):
-        # TODO: stop task
-        pass
+        logging.info('done task %s' % context.TASK_ID)
+        getattr(context.rpc, 'tasks__%s__done' % context.TASK_ID)(method='PUT')
 

@@ -1,6 +1,5 @@
 import os
 import logging
-import urllib
 import urllib2
 import socket
 import json
@@ -48,11 +47,12 @@ class _JsonProxy(object):
     def _get_response(self, api_url, kwds, method=None):
         opener = urllib2.build_opener(urllib2.HTTPHandler)
         if kwds:
-            request = urllib2.Request(api_url, data=urllib.urlencode(kwds))
+            request = urllib2.Request(api_url, json.dumps(kwds))
             if method is None:
                 method = 'POST'
         else:
             request = urllib2.Request(api_url)
+        request.add_header('Content-Type', 'application/json')
         request.set_proxy = lambda x,y: None
         request.get_method = lambda: method or 'GET'
         response = opener.open(request)
