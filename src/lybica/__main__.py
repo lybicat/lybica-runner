@@ -289,7 +289,7 @@ class CIServices(object):
             for action_name in context.ACTION_LIST:
                 action = self._get_ci_action(action_name)
                 if action is None:
-                    logging.debug('Action %s not in available actions. Please add it in Lybica Platform first.' % action_name)
+                    logging.warn('Action %s not in available actions. Please add it in Lybica Platform first.' % action_name)
                 elif _action_could_be_run(action.depends):
                     context.CURRENT_ID = action.id
                     has_action_execute = True
@@ -310,7 +310,7 @@ class CIServices(object):
                     break
         if context.ACTION_LIST:
             logging.info('%s remaining in ACTION_LIST.' % (context.ACTION_LIST))
-        critical_actions = [action_name for action_name in context.ACTION_LIST if self._get_ci_action(action_name).critical]
+        critical_actions = filter(lambda name: self._get_ci_action(name) and self._get_ci_action(name).critical, context.ACTION_LIST)
         if critical_actions:
             logging.info('Critical actions %s remaining in ACTION_LIST.' % (critical_actions))
 
