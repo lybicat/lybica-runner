@@ -32,7 +32,9 @@ class RepeatRunningWrapper(object):
     def _combine_output(self, output_dir, dst_file):
         # combine output files together
         logging.info('combine output files together')
-        subprocess.call(['rebot', '-N', 'repeated', '-d', output_dir, '-o', dst_file, os.path.join(output_dir, 'output-round-*.xml')])
+        rt = subprocess.call(['rebot', '-N', 'repeated', '-d', output_dir, '-o', dst_file, os.path.join(output_dir, 'output-round-*.xml')])
+        if rt != 0:
+            raise RuntimeError('failed to combine outputs')
 
     def stop_action(self, context):
         # generate output.xml, log and report, post it to server
