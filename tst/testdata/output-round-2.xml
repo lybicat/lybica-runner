@@ -1,165 +1,216 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generated="20151105 09:56:30.295" generator="Robot 2.9 (Python 2.7.6 on linux2)">
-<suite source="/home/zhang/workspace/lybica-runner/tst/testsuite" id="s1" name="Testsuite">
-<suite source="/home/zhang/workspace/lybica-runner/tst/testsuite/ut.robot" id="s1-s1" name="Ut">
-<test id="s1-s1-t1" name="Firefox should be able to open when VIM opened">
-<kw name="Open VIm">
-<kw name="Log" library="BuiltIn">
+<robot generated="20151111 14:21:46.747" generator="Robot 2.8.5 (Python 2.7.6 on linux2)">
+<suite source="/home/csrd/ci/jobs/cci_lybica-runner/workspace/tst/testsuite/ut.robot" id="s1" name="Ut">
+<test id="s1-t1" name="Firefox should be able to open when VIM opened">
+<kw type="kw" name="Open VIm">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Open VIM</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.393" level="INFO">Open VIM</msg>
-<status status="PASS" endtime="20151105 09:56:30.393" starttime="20151105 09:56:30.392"></status>
+<msg timestamp="20151111 14:21:46.800" level="INFO">Open VIM</msg>
+<status status="PASS" endtime="20151111 14:21:46.800" starttime="20151111 14:21:46.799"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.393" starttime="20151105 09:56:30.390"></status>
+<status status="PASS" endtime="20151111 14:21:46.800" starttime="20151111 14:21:46.799"></status>
 </kw>
-<kw name="VIM should be ready">
-<kw name="Log" library="BuiltIn">
+<kw type="kw" name="VIM should be ready">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VIM is ready</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.395" level="INFO">VIM is ready</msg>
-<status status="PASS" endtime="20151105 09:56:30.395" starttime="20151105 09:56:30.395"></status>
+<msg timestamp="20151111 14:21:46.801" level="INFO">VIM is ready</msg>
+<status status="PASS" endtime="20151111 14:21:46.801" starttime="20151111 14:21:46.800"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.396" starttime="20151105 09:56:30.394"></status>
+<status status="PASS" endtime="20151111 14:21:46.801" starttime="20151111 14:21:46.800"></status>
 </kw>
-<kw name="Open Firefox">
-<kw name="Log" library="BuiltIn">
+<kw type="kw" name="Open Firefox">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Open Firefox</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.399" level="INFO">Open Firefox</msg>
-<status status="PASS" endtime="20151105 09:56:30.399" starttime="20151105 09:56:30.399"></status>
+<msg timestamp="20151111 14:21:46.802" level="INFO">Open Firefox</msg>
+<status status="PASS" endtime="20151111 14:21:46.802" starttime="20151111 14:21:46.801"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.400" starttime="20151105 09:56:30.396"></status>
+<status status="PASS" endtime="20151111 14:21:46.802" starttime="20151111 14:21:46.801"></status>
 </kw>
-<kw name="Firefox should be ready">
-<kw name="Log" library="BuiltIn">
+<kw type="kw" name="Firefox should be ready">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Firefox is ready</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.401" level="INFO">Firefox is ready</msg>
-<status status="PASS" endtime="20151105 09:56:30.402" starttime="20151105 09:56:30.401"></status>
+<msg timestamp="20151111 14:21:46.803" level="INFO">Firefox is ready</msg>
+<status status="PASS" endtime="20151111 14:21:46.803" starttime="20151111 14:21:46.802"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.403" starttime="20151105 09:56:30.400"></status>
+<status status="PASS" endtime="20151111 14:21:46.803" starttime="20151111 14:21:46.802"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.403" critical="yes" starttime="20151105 09:56:30.389"></status>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151111 14:21:46.803" critical="yes" starttime="20151111 14:21:46.798"></status>
 </test>
-<test id="s1-s1-t2" name="VIM should be able to open when Firefox opened">
-<kw name="Open Firefox">
-<kw name="Log" library="BuiltIn">
+<test id="s1-t2" name="VIM should be able to open when Firefox opened">
+<kw type="kw" name="Open Firefox">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Open Firefox</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.408" level="INFO">Open Firefox</msg>
-<status status="PASS" endtime="20151105 09:56:30.408" starttime="20151105 09:56:30.406"></status>
+<msg timestamp="20151111 14:21:46.805" level="INFO">Open Firefox</msg>
+<status status="PASS" endtime="20151111 14:21:46.805" starttime="20151111 14:21:46.804"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.408" starttime="20151105 09:56:30.405"></status>
+<status status="PASS" endtime="20151111 14:21:46.805" starttime="20151111 14:21:46.804"></status>
 </kw>
-<kw name="Firefox should be ready">
-<kw name="Log" library="BuiltIn">
+<kw type="kw" name="Firefox should be ready">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Firefox is ready</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.412" level="INFO">Firefox is ready</msg>
-<status status="PASS" endtime="20151105 09:56:30.412" starttime="20151105 09:56:30.411"></status>
+<msg timestamp="20151111 14:21:46.805" level="INFO">Firefox is ready</msg>
+<status status="PASS" endtime="20151111 14:21:46.806" starttime="20151111 14:21:46.805"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.413" starttime="20151105 09:56:30.409"></status>
+<status status="PASS" endtime="20151111 14:21:46.806" starttime="20151111 14:21:46.805"></status>
 </kw>
-<kw name="Open VIm">
-<kw name="Log" library="BuiltIn">
+<kw type="kw" name="Open VIm">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Open VIM</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.416" level="INFO">Open VIM</msg>
-<status status="PASS" endtime="20151105 09:56:30.417" starttime="20151105 09:56:30.415"></status>
+<msg timestamp="20151111 14:21:46.806" level="INFO">Open VIM</msg>
+<status status="PASS" endtime="20151111 14:21:46.807" starttime="20151111 14:21:46.806"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.417" starttime="20151105 09:56:30.414"></status>
+<status status="PASS" endtime="20151111 14:21:46.807" starttime="20151111 14:21:46.806"></status>
 </kw>
-<kw name="VIM should be ready">
-<kw name="Log" library="BuiltIn">
+<kw type="kw" name="VIM should be ready">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VIM is ready</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.419" level="INFO">VIM is ready</msg>
-<status status="PASS" endtime="20151105 09:56:30.420" starttime="20151105 09:56:30.418"></status>
+<msg timestamp="20151111 14:21:46.807" level="INFO">VIM is ready</msg>
+<status status="PASS" endtime="20151111 14:21:46.808" starttime="20151111 14:21:46.807"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.420" starttime="20151105 09:56:30.417"></status>
+<status status="PASS" endtime="20151111 14:21:46.808" starttime="20151111 14:21:46.807"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.421" critical="yes" starttime="20151105 09:56:30.404"></status>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151111 14:21:46.808" critical="yes" starttime="20151111 14:21:46.803"></status>
 </test>
-<test id="s1-s1-t3" name="Chrome should be able to view Google when Firefox opened">
-<kw name="Open Firefox">
-<kw name="Log" library="BuiltIn">
+<test id="s1-t3" name="Chrome should be able to view Google when Firefox opened">
+<kw type="kw" name="Open Firefox">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Open Firefox</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.425" level="INFO">Open Firefox</msg>
-<status status="PASS" endtime="20151105 09:56:30.425" starttime="20151105 09:56:30.424"></status>
+<msg timestamp="20151111 14:21:46.810" level="INFO">Open Firefox</msg>
+<status status="PASS" endtime="20151111 14:21:46.810" starttime="20151111 14:21:46.810"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.426" starttime="20151105 09:56:30.423"></status>
+<status status="PASS" endtime="20151111 14:21:46.810" starttime="20151111 14:21:46.809"></status>
 </kw>
-<kw name="Firefox should be ready">
-<kw name="Log" library="BuiltIn">
+<kw type="kw" name="Firefox should be ready">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Firefox is ready</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.428" level="INFO">Firefox is ready</msg>
-<status status="PASS" endtime="20151105 09:56:30.428" starttime="20151105 09:56:30.427"></status>
+<msg timestamp="20151111 14:21:46.811" level="INFO">Firefox is ready</msg>
+<status status="PASS" endtime="20151111 14:21:46.811" starttime="20151111 14:21:46.811"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.429" starttime="20151105 09:56:30.426"></status>
+<status status="PASS" endtime="20151111 14:21:46.811" starttime="20151111 14:21:46.810"></status>
 </kw>
-<kw name="Visit Google in Chrome">
-<kw name="Open Chrome">
-<kw name="Log" library="BuiltIn">
+<kw type="kw" name="Visit Google in Chrome">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Open Chrome">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Open Chrome</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.432" level="INFO">Open Chrome</msg>
-<status status="PASS" endtime="20151105 09:56:30.433" starttime="20151105 09:56:30.431"></status>
+<msg timestamp="20151111 14:21:46.812" level="INFO">Open Chrome</msg>
+<status status="PASS" endtime="20151111 14:21:46.812" starttime="20151111 14:21:46.812"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.433" starttime="20151105 09:56:30.430"></status>
+<status status="PASS" endtime="20151111 14:21:46.812" starttime="20151111 14:21:46.811"></status>
 </kw>
-<kw name="Visit Google">
-<kw name="Log" library="BuiltIn">
+<kw type="kw" name="Visit Google">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Visit Google</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.436" level="INFO">Visit Google</msg>
-<status status="PASS" endtime="20151105 09:56:30.437" starttime="20151105 09:56:30.436"></status>
+<msg timestamp="20151111 14:21:46.813" level="INFO">Visit Google</msg>
+<status status="PASS" endtime="20151111 14:21:46.813" starttime="20151111 14:21:46.813"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.438" starttime="20151105 09:56:30.433"></status>
+<status status="PASS" endtime="20151111 14:21:46.813" starttime="20151111 14:21:46.812"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.439" starttime="20151105 09:56:30.429"></status>
+<status status="PASS" endtime="20151111 14:21:46.813" starttime="20151111 14:21:46.811"></status>
 </kw>
-<kw name="Google HomePage is visible">
-<kw name="Log" library="BuiltIn">
+<kw type="kw" name="Google HomePage is visible">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Log">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>Google is ready</arg>
 </arguments>
-<msg timestamp="20151105 09:56:30.441" level="INFO">Google is ready</msg>
-<status status="PASS" endtime="20151105 09:56:30.441" starttime="20151105 09:56:30.440"></status>
+<msg timestamp="20151111 14:21:46.814" level="INFO">Google is ready</msg>
+<status status="PASS" endtime="20151111 14:21:46.814" starttime="20151111 14:21:46.814"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.442" starttime="20151105 09:56:30.439"></status>
+<status status="PASS" endtime="20151111 14:21:46.814" starttime="20151111 14:21:46.814"></status>
 </kw>
-<status status="PASS" endtime="20151105 09:56:30.442" critical="yes" starttime="20151105 09:56:30.421"></status>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151111 14:21:46.815" critical="yes" starttime="20151111 14:21:46.808"></status>
 </test>
-<status status="PASS" endtime="20151105 09:56:30.443" starttime="20151105 09:56:30.379"></status>
-</suite>
-<status status="PASS" endtime="20151105 09:56:30.445" starttime="20151105 09:56:30.296"></status>
+<doc></doc>
+<metadata>
+</metadata>
+<status status="PASS" endtime="20151111 14:21:46.815" starttime="20151111 14:21:46.748"></status>
 </suite>
 <statistics>
 <total>
@@ -169,8 +220,7 @@
 <tag>
 </tag>
 <suite>
-<stat fail="0" id="s1" name="Testsuite" pass="3">Testsuite</stat>
-<stat fail="0" id="s1-s1" name="Ut" pass="3">Testsuite.Ut</stat>
+<stat fail="0" pass="3" id="s1" name="Ut">Ut</stat>
 </suite>
 </statistics>
 <errors>
