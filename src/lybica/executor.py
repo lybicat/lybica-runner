@@ -81,9 +81,9 @@ class ScriptExecutor(object):
         from datetime import datetime
         time_stamp = datetime.now().strftime("%H%M%S")
 
-        if not os.path.exists(context.OUTPUT_LOG):
-            os.makedirs(context.OUTPUT_LOG)
-        variable_file = '%s/variablefile_%s_%s.py' % (context.OUTPUT_LOG, name.replace('.', '_'), time_stamp)
+        if not os.path.exists(context.WORKSPACE):
+            os.makedirs(context.WORKSPACE)
+        variable_file = '%s/variablefile_%s_%s.py' % (context.WORKSPACE, name.replace('.', '_'), time_stamp)
         with open(variable_file, 'w') as vf:
             for k, v in param.iteritems():
                 vf.write("%s='%s'\n" % (k, v))
@@ -91,13 +91,12 @@ class ScriptExecutor(object):
                           '--monitorcolors', 'off',
                           '--exclude', 'not-ready',
                           '--loglevel', 'TRACE',
-                          '--outputdir', context.OUTPUT_LOG,
+                          '--outputdir', context.WORKSPACE,
                           '--output', '%s_%s.xml' % (name, time_stamp),
                           '--log', '%s_%s.html' % (name, time_stamp),
                           '--report', 'none',
                         ]
 
-        # robot_settings.extend(['--listener', 'rdb.Listener', file_path])
         robot_settings = '" "'.join(robot_settings)
 
         return 'pybot "%s"' % robot_settings

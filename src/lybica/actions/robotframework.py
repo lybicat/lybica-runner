@@ -1,4 +1,3 @@
-import subprocess
 import logging
 import os
 from lybica.utils import execute_command
