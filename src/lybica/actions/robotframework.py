@@ -55,10 +55,10 @@ class RepeatRunningWrapper(object):
         result = ExecutionResult(output_xml)
         return {'passed': result.return_code == 0,
                 'total': {
-                    'total': result.statistics.total.all.total,
-                    'passed': result.statistics.total.all.passed,
-                    'failed': result.statistics.total.all.failed,
-                    'elapsed': result.statistics.total.all.elapsed,
+                    'total': result.statistics.suite.stat.total,
+                    'passed': result.statistics.suite.stat.passed,
+                    'failed': result.statistics.suite.stat.failed,
+                    'elapsed': result.statistics.suite.stat.elapsed,
                 },
                 'tests': self._get_summary_of_a_suite(result.suite)
             }
