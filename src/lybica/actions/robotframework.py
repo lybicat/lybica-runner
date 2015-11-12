@@ -20,14 +20,27 @@ class RepeatRunningWrapper(object):
         self.task_id = context.TASK_ID
         context.CASE_ROOT = os.getenv('CASE_ROOT', '.') # TODO
         logging.info('CASE_ROOT: %s' % context.CASE_ROOT)
-        self._run_test(context.RUN_TIMES, context.CASE_ROOT, self.output_dir)
+        if context.RUN_TIMES > 1:
+            self._run_tests(context.RUN_TIMES, context.CASE_ROOT, self.output_dir)
+        else:
+            self._run_test_once(context.CASE_ROOT, self.output_dir, self.output_xml)
 
-    def _run_test(self, run_times, case_root, output_dir):
+    def _run_tests(self, run_times, case_root, output_dir):
         for _round in xrange(run_times):
             logging.info('Round %d' % (_round + 1))
             subprocess.call(['pybot', '-L', 'Trace', '--report',\
                     'None', '--log', 'None', '-d', output_dir, '-o',\
                     'output-round-%d.xml' % (_round + 1), case_root])
+
+    def _run_test_once(self, case_root, output_dir, output_xml):
+        subprocess.call(['pybot', '-L', 'Trace', '-d', output_dir, '-o', output_xml, case_root])
+
+    def stop_action(self, context):
+        # generate output.xml, log and report, post it to server
+        if context.RUN_TIMES > 1:
+            self._combine_output(self.output_dir, self.output_xml)
+        summary = self._get_test_summary(os.path.join(self.output_dir, self.output_xml))
+        self._post_test_summary(summary)
 
     def _combine_output(self, output_dir, dst_file):
         # combine output files together
@@ -35,12 +48,6 @@ class RepeatRunningWrapper(object):
         rt = subprocess.call(['rebot', '-N', 'repeated', '-d', output_dir, '-o', dst_file, os.path.join(output_dir, 'output-round-*.xml')])
         if rt != 0:
             raise RuntimeError('failed to combine outputs')
-
-    def stop_action(self, context):
-        # generate output.xml, log and report, post it to server
-        self._combine_output(self.output_dir, self.output_xml)
-        summary = self._get_test_summary(os.path.join(self.output_dir, self.output_xml))
-        self._post_test_summary(summary)
 
     def _get_test_summary(self, output_xml):
         from robot.api import ExecutionResult

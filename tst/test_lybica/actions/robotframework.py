@@ -1,5 +1,6 @@
 import os
 import shutil
+import glob
 from unittest import TestCase
 from lybica.actions.robotframework import RepeatRunningWrapper
 from lybica.__main__ import Context
@@ -19,8 +20,12 @@ class TestRepeatRunningWrapper(TestCase):
         if os.path.exists(self.context.WORKSPACE):
             shutil.rmtree(self.context.WORKSPACE)
 
+    def test_run_test_1_time(self):
+        self.action._run_test_once(self.context.CASE_ROOT, self.context.WORKSPACE, 'output.xml')
+        self.assertEqual(len(glob.glob('%s/*.xml' % self.context.WORKSPACE)), 1)
+
     def test_run_test_5_times(self):
-        self.action._run_test(5, self.context.CASE_ROOT, self.context.WORKSPACE)
+        self.action._run_tests(5, self.context.CASE_ROOT, self.context.WORKSPACE)
         self.assertEqual(len(os.listdir(self.context.WORKSPACE)), 5)
 
     def test_combine_2_records_together(self):
