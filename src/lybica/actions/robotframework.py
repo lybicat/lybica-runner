@@ -1,6 +1,7 @@
 import subprocess
 import logging
 import os
+from lybica.utils import execute_command
 
 
 class RepeatRunningWrapper(object):
@@ -28,12 +29,12 @@ class RepeatRunningWrapper(object):
     def _run_tests(self, run_times, case_root, output_dir):
         for _round in xrange(run_times):
             logging.info('Round %d' % (_round + 1))
-            subprocess.call(['pybot', '-L', 'Trace', '--report',\
+            execute_command('pybot', '-L', 'Trace', '--report',\
                     'None', '--log', 'None', '-d', output_dir, '-o',\
-                    'output-round-%d.xml' % (_round + 1), case_root])
+                    'output-round-%d.xml' % (_round + 1), case_root)
 
     def _run_test_once(self, case_root, output_dir, output_xml):
-        subprocess.call(['pybot', '-L', 'Trace', '-d', output_dir, '-o', output_xml, case_root])
+        execute_command('pybot', '-L', 'Trace', '-d', output_dir, '-o', output_xml, case_root)
 
     def stop_action(self, context):
         # generate output.xml, log and report, post it to server
@@ -45,9 +46,8 @@ class RepeatRunningWrapper(object):
     def _combine_output(self, output_dir, dst_file):
         # combine output files together
         logging.info('combine output files together')
-        rt = subprocess.call(['rebot', '-N', 'repeated', '-d', output_dir, '-o', dst_file, os.path.join(output_dir, 'output-round-*.xml')])
-        if rt != 0:
-            raise RuntimeError('failed to combine outputs')
+        execute_command('rebot', '-N', 'repeated', '-d', output_dir,\
+            '-o', dst_file, os.path.join(output_dir, 'output-round-*.xml'))
 
     def _get_test_summary(self, output_xml):
         from robot.api import ExecutionResult
