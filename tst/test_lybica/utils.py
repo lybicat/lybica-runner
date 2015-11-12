@@ -4,10 +4,10 @@ from unittest import TestCase
 
 class TestExecuteCommand(TestCase):
     def test_execute_date_command(self):
-        execute_command('date')
+        self.assertEqual(execute_command('date'), 0)
 
     def test_execute_ping_c_3_command(self):
-        execute_command('ping', '-c', '3', '127.0.0.1')
+        self.assertEqual(execute_command('ping', '-c', '3', '127.0.0.1'), 0)
 
     def test_execute_ping_invalid_command(self):
-        self.assertRaises(RuntimeError, execute_command, 'ping', 'invalid')
+        self.assertNotEqual(execute_command('ping', 'invalid'), 0)

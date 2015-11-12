@@ -16,6 +16,5 @@ def execute_command(*cmds):
         sys.stdout.write(buff)
         sys.stdout.flush()
 
-    if p.returncode != 0:
-        raise RuntimeError('failed to execute command %s' % ' '.join(cmds))
+    return p.returncode
 

@@ -45,8 +45,10 @@ class RepeatRunningWrapper(object):
     def _combine_output(self, output_dir, dst_file):
         # combine output files together
         logging.info('combine output files together')
-        execute_command('rebot', '-N', 'repeated', '-d', output_dir,\
+        rt = execute_command('rebot', '-N', 'repeated', '-d', output_dir,\
             '-o', dst_file, os.path.join(output_dir, 'output-round-*.xml'))
+        if rt != 0:
+            raise RuntimeError('failed to combine output files')
 
     def _get_test_summary(self, output_xml):
         from robot.api import ExecutionResult
