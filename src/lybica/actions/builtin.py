@@ -84,7 +84,7 @@ class TaskLoader(object):
         task_id = os.getenv('TASK_ID')
         if task_id is None:
             raise RuntimeError('no TASK_ID defined')
-        task = getattr(self.rpc, 'tasks__' + task_id)()
+        task = getattr(self.rpc, 'task__' + task_id)()
         context.TASK_ID = task_id
         context.BUILD_ID = task['build']
         context.CASE_SET = task['caseset']
@@ -102,9 +102,9 @@ class TaskStatusUpdater(object):
 
     def start_action(self, context):
         logging.info('start task %s' % context.TASK_ID)
-        getattr(context.rpc, 'tasks__%s__start' % context.TASK_ID)(method='PUT')
+        getattr(context.rpc, 'task__%s__start' % context.TASK_ID)(method='PUT')
 
     def stop_action(self, context):
         logging.info('done task %s' % context.TASK_ID)
-        getattr(context.rpc, 'tasks__%s__done' % context.TASK_ID)(method='PUT')
+        getattr(context.rpc, 'task__%s__done' % context.TASK_ID)(method='PUT')
 
