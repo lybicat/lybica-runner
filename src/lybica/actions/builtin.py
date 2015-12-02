@@ -58,8 +58,9 @@ class ZipArchiver(object):
 
         z = zipstream.ZipFile(mode='w')
         for root, _, files in os.walk(root_path):
-            dir_path = root[len(root_path):].strip('/') + '/'
-            z.write(dir_path)
+            dir_path = (root[len(root_path):].strip('/') + '/').lstrip('/')
+            if dir_path != '':
+                z.write(root, dir_path)
             for _f in files:
                 z.write_iter(iterable=file_iter(os.path.join(root, _f)), arcname=dir_path + _f)
 
