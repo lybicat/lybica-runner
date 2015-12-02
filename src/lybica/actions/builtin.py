@@ -28,16 +28,48 @@ class InitWorkspace(object):
     ID = 1
     ESC = 'Init task execution context.'
     NAME = 'init_context'
-    DEPENDS = ["init_primary_actions", ]
+    DEPENDS = ['init_primary_actions', ]
     CRITICAL = True
 
     def start_action(self, context):
         context.WORKSPACE = os.getenv('WORKSPACE', os.path.abspath('.'))
         logging.info('use WORKSPACE: ' + context.WORKSPACE)
 
+
+class ZipArchiver(object):
+    ID = 5
+    ESC = 'archive workspace contents to remote storage.'
+    NAME = 'zip_archive'
+    DEPENDS = ['init_context', ]
+
     def stop_action(self, context):
+        logging.info('create zip stream from WORKSPACE: ' + context.WORKSPACE)
+        stream = self._create_zip_stream(context.WORKSPACE)
+        log_url = self._post_to_hdfs(stream)
+        self._update_task_logurl(context.TASK_ID, log_url)
+
+    def _create_zip_stream(self, root_path):
+        import zipstream
+
+        def file_iter(file_path):
+            with open(file_path, 'rb') as fp:
+                for line in fp:
+                    yield line
+
+        z = zipstream.ZipFile(mode='w')
+        for root, _, files in os.walk(root_path):
+            dir_path = root[len(root_path):].strip('/') + '/'
+            z.write(dir_path)
+            for _f in files:
+                z.write_iter(iterable=file_iter(os.path.join(root, _f)), arcname=dir_path + _f)
+
+        return z
+
+    def _post_to_hdfs(self, stream):
         pass
 
+    def _update_task_logurl(self, task_id, log_url):
+        pass
 
 class TaskLoader(object):
     ID = 8
@@ -49,12 +81,11 @@ class TaskLoader(object):
     def start_action(self, context):
         self.rpc = context.rpc
         logging.info('loading task from server.....')
-        queued_tasks = self.rpc.tasks__queued()
-        if not queued_tasks:
-            logging.info('no task in queue')
-            raise RuntimeError('no task in queue')
-        task = queued_tasks.pop()
-        context.TASK_ID = task['_id']
+        task_id = os.getenv('TASK_ID')
+        if task_id is None:
+            raise RuntimeError('no TASK_ID defined')
+        task = getattr(self.rpc, 'tasks__' + task_id)()
+        context.TASK_ID = task_id
         context.BUILD_ID = task['build']
         context.CASE_SET = task['caseset']
         context.DEVICE_SET = task['device']
