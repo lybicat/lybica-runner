@@ -1,5 +1,8 @@
 import os
 import logging
+import zipstream
+import requests
+
 
 class InitPrimaryActions(object):
     ID = 0
@@ -19,6 +22,7 @@ class InitPrimaryActions(object):
         #             501-600 sys task actions, selected by 'load_task';
         #             601-    custom task actions, selected by 'load_task';
         context.ACTION_LIST.extend(['init_context',
+                                    'zip_archive',
                                     'load_task',
                                     'sync_task_status',
                                     ])
@@ -42,15 +46,21 @@ class ZipArchiver(object):
     NAME = 'zip_archive'
     DEPENDS = ['init_context', ]
 
+    def start_action(self, context):
+        self.hdfs_view_url = os.getenv('LYBICA_HDFS_URL')
+        if self.hdfs_view_url is None:
+            raise RuntimeError('No "${LYBICA_HDFS_URL}" env variable defined!')
+        logging.info('LYBICA HDFS URL: %s' % self.hdfs_view_url)
+
     def stop_action(self, context):
         logging.info('create zip stream from WORKSPACE: ' + context.WORKSPACE)
         stream = self._create_zip_stream(context.WORKSPACE)
+        logging.info('post zip stream to HDFS')
         log_url = self._post_to_hdfs(stream)
+        logging.info('update task log URL')
         self._update_task_logurl(context.TASK_ID, log_url)
 
     def _create_zip_stream(self, root_path):
-        import zipstream
-
         def file_iter(file_path):
             with open(file_path, 'rb') as fp:
                 for line in fp:
@@ -67,10 +77,22 @@ class ZipArchiver(object):
         return z
 
     def _post_to_hdfs(self, stream):
-        pass
+        def data_iter():
+            for chunk in stream:
+                if chunk:
+                    yield chunk
+        response = requests.post(self.hdfs_view_url, data=data_iter())
+        if response.status_code != 200:
+            raise RuntimeError('failed to post data to hdfs, reason: "%s"' % response.reason)
+
+        log_url = response.headers['hdfsurl']
+        logging.info('Log URL: %s' % log_url)
+
+        return log_url
 
     def _update_task_logurl(self, task_id, log_url):
         pass
+
 
 class TaskLoader(object):
     ID = 8
