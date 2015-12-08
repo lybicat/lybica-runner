@@ -94,7 +94,8 @@ class ZipArchiver(object):
         return log_url
 
     def _update_task_logurl(self, task_id, log_url):
-        getattr(self.rpc, 'task__' + task_id)(loglink=log_url)
+        # consolelink is <log_url>/<task_id>_console.txt
+        getattr(self.rpc, 'task__' + task_id)(loglink=log_url, consolelink=log_url + '%s_console.txt' % task_id)
 
 
 class TaskLoader(object):
