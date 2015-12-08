@@ -47,6 +47,7 @@ class ZipArchiver(object):
     DEPENDS = ['init_context', ]
 
     def start_action(self, context):
+        self.rpc = context.rpc
         self.hdfs_view_url = os.getenv('LYBICA_HDFS_URL')
         if self.hdfs_view_url is None:
             raise RuntimeError('No "${LYBICA_HDFS_URL}" env variable defined!')
@@ -87,13 +88,13 @@ class ZipArchiver(object):
         if response.status_code != 200:
             raise RuntimeError('failed to post data to hdfs, reason: "%s"' % response.reason)
 
-        log_url = response.headers['hdfsurl']
+        log_url = '/hdfs/%s!/' % response.headers['hdfsurl']
         logging.info('Log URL: %s' % log_url)
 
         return log_url
 
     def _update_task_logurl(self, task_id, log_url):
-        pass
+        getattr(self.rpc, 'task__' + task_id)(loglink=log_url)
 
 
 class TaskLoader(object):

@@ -11,4 +11,7 @@ test:
 
 clean:
 	@echo cleaning...
+	-rm -rf build
+	-rm -rf dist
+	-rm -rf src/lybica.egg-info
 
